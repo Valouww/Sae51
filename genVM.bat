@@ -1,12 +1,13 @@
 @echo off
 
 REM Chemin vers le dossier d'installation de VirtualBox
-set VBOXMANAGE="D:\VM\VBoxManage.exe"
+set VBOXMANAGE="C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
 
 REM Initialisation des variables du nom de la machine,de la taille de la RAM et de la taille du disque dur
 set MV=%2%
 set RAM=4096
 set DISQUE=65536
+REM set ISO_PATH="C:\Users\valen\Downloads\debian-12.7.0-amd64-netinst.iso"
 
 REM Vérification qu'il y a un premier argument (action a faire)
 if "%~1"=="" (
@@ -53,12 +54,29 @@ REM Configuration de la machine virtuelle
 %VBOXMANAGE% storageattach "%MV%" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "%MV%.vdi"
 %VBOXMANAGE% modifyvm %MV% --nic1 nat --nicbootprio1 1
 
-REM Activation du PXE
-%VBOXMANAGE% modifyvm "%MV%" --boot1 net
+
+REM Ajout de l'ISO
+REM %VBOXMANAGE% storageattach "%MV%" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium "%ISO_PATH%"
+
+REM Modification de la machine virtuelle pour l'autologon
+%VBOXMANAGE% modifyvm "%MV%" --autostart-enabled on
+%VBOXMANAGE% modifyvm "%MV%" --vrde on
+%VBOXMANAGE% modifyvm "%MV%" --vrdeaddress 127.0.0.1
+%VBOXMANAGE% modifyvm "%MV%" --vrdeport 3389
+%VBoxManage% modifyvm "%MV%" --autostart-delay 5
+
+REM Activation du PXE, boot d'abord par le pxe puis l'iso
+REM %VBOXMANAGE% modifyvm "%MV%" --boot1 net --boot2 dvd
 
 REM Ajouter des métadonnées a la machine virtuelle
 %VBOXMANAGE% setextradata "%MV%" "CustomData/Date" "%DATE%"
 %VBOXMANAGE% setextradata "%MV%" "CustomData/User" "%USERNAME%"
+
+l
+REM Démarage de processus au lacement
+REM %VBOXMANAGE% guestcontrol "%MV%" copyto "$SERVICE_SCRIPT" "/tmp/service_startup.sh" --username root --password "password" --target-directory "/tmp/"
+REM %VBOXMANAGE% guestcontrol "%MV%" run --exe "/bin/bash" --username root --password "password" --wait-stdout -- "/bin/bash" "-c" "chmod +x /tmp/service_startup.sh && /tmp/service_startup.sh"
+REM Lance un appli lors du lancement (ligne du dessus)
 
 echo La machine virtuelle a bien été créée.
 exit /b
