@@ -36,6 +36,10 @@ Cette version étend les capacités du script en permettant à l'utilisateur de 
 #### Version 3
 Cette version introduit la gestion des métadonnées. Les informations supplémentaires ajoutées aux machines peuvent être visualisées lors du listage. Nous avons rencontré quelques difficultés pour scripter ces métadonnées de manière claire.
 
+#### Ajouts Personnels
+Pour finir, nous avons ajouté une interface graphique rappelant les choix possibles ainsi qu'une vérification que la machine existe bien avant de faire une action ou que le paramètre rentré existe bien.
+
+
 ### Les limites
 
 Les limitations actuelles du script sont : la création d'une seule machine par exécution et un niveau d'automatisation qui ne réduit pas significativement le temps de travail de l'administrateur.
