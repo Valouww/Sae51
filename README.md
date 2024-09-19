@@ -39,10 +39,13 @@ Cette version introduit la gestion des métadonnées. Les informations suppléme
 #### Ajouts Personnels
 Pour finir, nous avons ajouté une interface graphique rappelant les choix possibles ainsi qu'une vérification que la machine existe bien avant de faire une action ou que le paramètre rentré existe bien.
 
+#### Problème rencontré
+Un des problèmes rencontrés est le test d'erreur pour vérifier si la machine existait déjà ou non, ne fonctionnait parfois pas alors qu'aucune modification n'avait été faite.Pour corriger cela, nous avons implémenté le test qui vérifie si le dossier où la VM est stocké existe.
 
 ### Les limites
 
 Les limitations actuelles du script sont : la création d'une seule machine par exécution et un niveau d'automatisation qui ne réduit pas significativement le temps de travail de l'administrateur.
+Pour améliorer cela, il faudrait un deuxième script qui appelle celui-ci de sorte à créer plusieurs machines
 
 ## Conclusion
 
