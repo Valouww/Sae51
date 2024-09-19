@@ -1,5 +1,8 @@
 @echo off
+REM Permet de mettre l'encodage en UTF-8
 chcp 65001>nul
+
+REM permet de stocker les variable localement
 setlocal enabledelayedexpansion
 
 REM Chemin vers le dossier d'installation de VirtualBoxManager
@@ -30,6 +33,8 @@ for /f "tokens=1" %%a in ('%VBOXMANAGE% list vms') do (
     exit /b
 )
 
+
+REM Lister les actions possible
 if /i "%1%"=="?" (
 echo L = Listage des machine virtuelle existante
 echo N = Création d'une machine virtuelle, Il faut préciser le nom de la machine qui va être créer. [Optionnel] Vous pouvez ajouter à la suite la RAM et la taille du disque souhaiter
@@ -50,11 +55,15 @@ REM Si l'option de création de la machine est choisit
 if /i "%1"=="N" (
 
 REM Vérification dans le cas ou la machine existe deja
-if exist "C:\Users\Valouw\VirtualBox VMs\%MV%" (
+if exist "C:\Users\%USERNAME%\VirtualBox VMs\%MV%" (
 
     REM Suppression de la machine pour la recrée si elle existe deja
     echo La machine existait déja, elle a été supprimer
     %VBOXMANAGE% unregistervm "%MV%" --delete
+)
+if not "%~5"=="" (
+    echo Veuillez spécifier uniquement deux arguments
+    exit /b
 )
 
 REM Choix parametre
@@ -94,7 +103,7 @@ if /i "%1%"=="D" (
             echo Veuillez spécifier uniquement deux arguments
             exit /b
         )
-	IF %errorlevel% equ 0 (
+	IF exist "C:\Users\%USERNAME%\VirtualBox VMs\%MV%" (
      		%VBOXMANAGE% startvm "%MV%"
      		echo La machine virtuelle "%MV%" a bien été démarée.
 		exit /b
@@ -111,7 +120,7 @@ if /i "%1%"=="A" (
             echo Veuillez spécifier uniquement deux arguments
             exit /b
         )
-	IF exist "C:\Users\Valouw\VirtualBox VMs\%MV%" (
+	IF exist "C:\Users\%USERNAME%\VirtualBox VMs\%MV%" (
      		%VBOXMANAGE% controlvm "%MV%" poweroff
      		echo La machine virtuelle "%MV%" a bien été arrêter.
 		exit /b
@@ -127,7 +136,7 @@ if /i "%1%"=="S" (
             echo Veuillez spécifier uniquement deux arguments
             exit /b
         )
-        IF exist "C:\Users\Valouw\VirtualBox VMs\%MV%" (
+        IF exist "C:\Users\%USERNAME%\VirtualBox VMs\%MV%" (
      		%VBOXMANAGE% unregistervm "%MV%" --delete
      		echo La machine virtuelle "%MV%" a bien été supprimée.
 		exit /b
