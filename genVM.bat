@@ -103,6 +103,7 @@ if /i "%1%"=="D" (
             echo Veuillez spécifier uniquement deux arguments
             exit /b
         )
+        REM Vérification dans le cas où la machine existe déjà, modifier le path ici avec le path où sont stockées les VM, si les machines sont créées par défaut ce lien fonctionnera
 	IF exist "C:\Users\%USERNAME%\VirtualBox VMs\%MV%" (
      		%VBOXMANAGE% startvm "%MV%"
      		echo La machine virtuelle "%MV%" a bien été démarée.
@@ -120,6 +121,7 @@ if /i "%1%"=="A" (
             echo Veuillez spécifier uniquement deux arguments
             exit /b
         )
+        REM Vérification dans le cas où la machine existe déjà, modifier le path ici avec le path où sont stockées les VM, si les machines sont créées par défaut ce lien fonctionnera
 	IF exist "C:\Users\%USERNAME%\VirtualBox VMs\%MV%" (
      		%VBOXMANAGE% controlvm "%MV%" poweroff
      		echo La machine virtuelle "%MV%" a bien été arrêter.
@@ -136,6 +138,7 @@ if /i "%1%"=="S" (
             echo Veuillez spécifier uniquement deux arguments
             exit /b
         )
+        REM Vérification dans le cas où la machine existe déjà, modifier le path ici avec le path où sont stockées les VM, si les machines sont créées par défaut ce lien fonctionnera
         IF exist "C:\Users\%USERNAME%\VirtualBox VMs\%MV%" (
      		%VBOXMANAGE% unregistervm "%MV%" --delete
      		echo La machine virtuelle "%MV%" a bien été supprimée.
