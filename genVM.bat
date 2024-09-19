@@ -54,7 +54,7 @@ if "%~2"=="" (
 REM Si l'option de création de la machine est choisit
 if /i "%1"=="N" (
 
-REM Vérification dans le cas ou la machine existe deja
+REM Vérification dans le cas où la machine existe déjà, modifier le path ici avec le path où sont stockées les VM, si les machines sont créées par défaut ce lien fonctionnera
 if exist "C:\Users\%USERNAME%\VirtualBox VMs\%MV%" (
 
     REM Suppression de la machine pour la recrée si elle existe deja
